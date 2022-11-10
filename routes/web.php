@@ -45,4 +45,7 @@ Route::group(['middleware' => 'auth'], function(){
     // FOLLOW
     Route::get('follow/{id}', [FollowController::class, 'follow']);
     Route::get('unfollow/{id}', [FollowController::class, 'unfollow']);
+    Route::get('follow-request', [FollowController::class, 'followRequest']);
+    Route::get('accept-follow-request/{id}', [FollowController::class, 'acceptFollow']);
+    Route::get('reject-follow-request/{id}', [FollowController::class, 'rejectFollow']);
 });

@@ -76,9 +76,13 @@
                             @endif
                         @else
                             <li class="nav-item dropdown">
+                                @if(Auth::user()->is_private == 1)
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('follow-request') }}" title="Permintaan Pengikut"><i class="fa fa-bell"></i><span class="badge badge-danger ml-1">1</span></a>
+                                    <a class="nav-link" href="{{ url('follow-request') }}" title="Permintaan Pengikut">
+                                        <i class="fa fa-user-plus"></i>
+                                    </a>
                                 </li>
+                                @endif
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ url('user') . '/' . Auth::user()->id }}">Profile</a>
                                 </li>
