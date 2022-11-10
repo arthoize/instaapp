@@ -77,6 +77,9 @@
                         @else
                             <li class="nav-item dropdown">
                                 <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('follow-request') }}" title="Permintaan Pengikut"><i class="fa fa-bell"></i><span class="badge badge-danger ml-1">1</span></a>
+                                </li>
+                                <li class="nav-item">
                                     <a class="nav-link" href="{{ url('user') . '/' . Auth::user()->id }}">Profile</a>
                                 </li>
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

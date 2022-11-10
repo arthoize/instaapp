@@ -17,6 +17,7 @@ class CreateFollowTable extends Migration
             $table->uuid('id')->primary();
             $table->uuid('user_id');
             $table->uuid('following_user_id');
+            $table->boolean('is_accepted')->default(0);
             $table->timestamps();
         });
     }

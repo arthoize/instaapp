@@ -40,8 +40,10 @@
                                         @if(Auth::user()->id == $user->id)
                                         <a href="{{ url('profile') }}" class="btn btn-primary">Edit Profile</a>
                                         @else
-                                            @if($is_following)
-                                            <span class="badge badge-success">Following</span>
+                                            @if($is_following == 'accepted')
+                                            <a href="{{ url('unfollow') . '/' . $user->id }}" class="btn btn-success" title="Click to Unfollow">Following</a>
+                                            @elseif($is_following == 'requested')
+                                            <a href="{{ url('unfollow') . '/' . $user->id }}" class="btn btn-info" title="Click to Cancel Request">Requested</a>
                                             @else
                                             <a href="{{ url('follow') . '/' . $user->id }}" class="btn btn-primary">Follow</a>
                                             @endif
@@ -77,7 +79,7 @@
     </div>
     <!-- is not private -->
     <div class="row justify-content-center">
-    @if($user->is_private != 1 || $is_following || (Auth::check() && Auth::user()->id == $user->id))
+    @if($user->is_private != 1 || in_array($is_following, ['accepted']) || (Auth::check() && Auth::user()->id == $user->id))
         @if($post->isNotEmpty())
             <div class="col-md-8 mb-2">
                 <div class="row">
@@ -152,7 +154,11 @@
             <div class="card-body text-center">
                 <i class="fa fa-lock fa-3x mb-2"></i>
                 <h4>Akun Privat</h4>
+                @if($is_following == 'requested')
+                <p>Tunggu {{ $user->name }} untuk menerima permintaan Anda</p>
+                @elseif($is_following == 'no_request')
                 <p>Silahkan follow untuk melihat postingan {{ $user->name }}</p>
+                @endif
             </div>
         </div>
     </div>

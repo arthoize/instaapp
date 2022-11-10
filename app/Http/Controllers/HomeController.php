@@ -29,7 +29,7 @@ class HomeController extends Controller
     {
         $follow = [];
         if(Auth::check()){
-            $follow = Follow::select('following_user_id')->where('user_id', Auth::user()->id)->get()->toArray();
+            $follow = Follow::select('following_user_id')->where('user_id', Auth::user()->id)->where('is_accepted', 1)->get()->toArray();
         }
 
         $post = Post::with('comment.user', 'like')
@@ -66,14 +66,18 @@ class HomeController extends Controller
             return redirect('/')->with('error', 'User tidak ditemukan');
         }
 
-        $is_following = false;
-        $follower = Follow::where('following_user_id', $user->id)->count();
-        $following = Follow::where('user_id', $user->id)->count();
+        $is_following = 'no_request';
+        $follower = Follow::where('following_user_id', $user->id)->where('is_accepted', 1)->count();
+        $following = Follow::where('user_id', $user->id)->where('is_accepted', 1)->count();
 
         if(Auth::check()){
             $follow = Follow::where('following_user_id', $id)->where('user_id', Auth::user()->id)->first();
             if($follow){
-                $is_following = true;
+                if($follow->is_accepted ==1){
+                    $is_following = 'accepted';
+                } else {
+                    $is_following = 'requested';
+                }
             }
         }
 
